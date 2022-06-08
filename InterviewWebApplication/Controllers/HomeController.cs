@@ -1,4 +1,7 @@
-﻿using InterviewWebApplication.Connection;
+﻿using Dapper;
+using InterviewWebApplication.Connection;
+using InterviewWebApplication.Models;
+using InterviewWebApplication.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +21,27 @@ namespace InterviewWebApplication.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var viewModel = new UserViewModel
+            {
+                Users = GetUsers()
+            };
+
+            return View(viewModel);
         }
 
-        
+
+        private IEnumerable<User> GetUsers()
+        {
+            var sql = @"
+                    SELECT * FROM Users
+                    ";
+
+            using (var conn = _connectionFactory.CreateConnection())
+            {
+                var users = conn.Query<User>(sql);
+                return users;
+            }
+            
+        }
     }
 }
