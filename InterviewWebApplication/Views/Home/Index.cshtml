@@ -4,7 +4,7 @@
 }
 <br />
 <div>
-    <a href="@Url.Action("Create","Users")"> 新增</a>
+    @Html.ActionLink("新增","Create") 
 </div>
 <div>
     <table class="table">
@@ -26,8 +26,9 @@
                         @Html.DisplayFor(modelItem => m.Email)
                     </td>
                     <td>
-                        <a href="@Url.Action("Edit","Users",new { id = m.Id})" title="修改"> 修改</a>
-                        <a href="@Url.Action("Delete","Users",new { id = m.Id})" title="刪除​" > 刪除​ </a>
+                        @Html.ActionLink("明細","Details", new { id = m.Id })
+                        @Html.ActionLink("修改", "Edit", new { id = m.Id })
+                        @Html.ActionLink("刪除", "Delete", new { id = m.Id })
                     </td>
                 </tr>
             }

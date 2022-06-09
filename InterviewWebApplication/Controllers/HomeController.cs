@@ -29,6 +29,19 @@ namespace InterviewWebApplication.Controllers
             return View(viewModel);
         }
 
+        public ActionResult Details(int? id)
+        {
+            var user = GetUser(id);
+            if (user == null)
+                return HttpNotFound();
+
+            var viewModel = new UserFormViewModel
+            {
+                User = user
+            };
+
+            return View(viewModel);
+        }
 
         private IEnumerable<User> GetUsers()
         {
@@ -42,6 +55,23 @@ namespace InterviewWebApplication.Controllers
                 return users;
             }
             
+        }
+
+        private User GetUser(int? id)
+        {
+            var sql = @"
+                    SELECT * FROM Users WHERE Id = @Id
+                    ";
+
+            DynamicParameters p = new DynamicParameters();
+            p.Add("@Id", id);
+
+            using (var conn = _connectionFactory.CreateConnection())
+            {
+                var user = conn.QuerySingleOrDefault<User>(sql,p);
+                return user;
+            }
+
         }
     }
 }
