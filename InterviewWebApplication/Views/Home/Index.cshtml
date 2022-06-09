@@ -10,7 +10,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>姓名</th>
+                <th>Name</th>
                 <th>Email</th>
                 <th>功能</th>
             </tr>
@@ -27,7 +27,7 @@
                     </td>
                     <td>
                         @Html.ActionLink("明細","Details", new { id = m.Id })
-                        @Html.ActionLink("修改", "Edit", new { id = m.Id })
+                        @Html.ActionLink("編輯", "Edit", new { id = m.Id })
                         @Html.ActionLink("刪除", "Delete", new { id = m.Id })
                     </td>
                 </tr>
