@@ -104,6 +104,35 @@ namespace InterviewWebApplication.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Delete(int? id)
+        {
+            var user = GetUser(id);
+            if (user == null)
+                return HttpNotFound();
+
+            var viewModel = new UserFormViewModel
+            {
+                User = user
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                DeleteUser(id);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return RedirectToAction("Index");
+        }
+
         private IEnumerable<User> GetUsers()
         {
             var sql = @"
@@ -166,6 +195,26 @@ namespace InterviewWebApplication.Controllers
             try
             {
                 conn.Execute(sql, user);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        private void DeleteUser(int id)
+        {
+            var conn = _connectionFactory.CreateConnection();
+            var sql = @"
+                    DELETE FROM Users
+                    WHERE Id = @Id 
+                    ";
+
+            DynamicParameters p = new DynamicParameters();
+            p.Add("@Id", id);
+
+            try
+            {
+                conn.Execute(sql, p);
             }
             catch (Exception ex)
             {

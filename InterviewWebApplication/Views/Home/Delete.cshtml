@@ -1,0 +1,32 @@
+﻿@model InterviewWebApplication.ViewModels.UserFormViewModel
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>刪除資料</h2>
+
+
+<table class="table">
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.User.Id) </td>
+        <td>@Html.DisplayFor(m => m.User.Id)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.User.Name)</td>
+        <td>@Html.DisplayFor(m => m.User.Name)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(m => m.User.Email)</td>
+        <td>@Html.DisplayFor(m => m.User.Email)</td>
+    </tr>
+</table>
+<div>
+    @using (Html.BeginForm("Delete", "Home", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.User.Id)
+        @Html.AntiForgeryToken()
+        @Html.ActionLink("返回列表", "Index")
+        <input type="submit" value="確認刪除" />
+    }
+
+</div>
